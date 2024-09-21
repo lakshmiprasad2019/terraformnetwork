@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose the Terraform action')
+    }
+
+    stages {
+        stage('git checkout') {
+            steps {
+                git 'https://github.com/lakshmiprasad2019/terraformnetwork.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Terraform Apply/Destroy') {
+            steps {
+                script {
+                    if (params.ACTION == 'apply') {
+                        sh 'terraform apply -auto-approve'
+                    } else if (params.ACTION == 'destroy') {
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
+            }
+        }
+    }
+}
