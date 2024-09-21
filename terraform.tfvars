@@ -1,0 +1,5 @@
+myregion = "us-east-1"
+vpccidr = "20.20.0.0/16"
+publicsubnetcidr = "20.20.1.0/24"
+privatesubcidr = "20.20.2.0/24"
+private-1subcidr = "20.20.3.0/24"
